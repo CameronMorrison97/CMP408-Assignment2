@@ -16,6 +16,7 @@
 					var valuejs = $("#value").val();
 					
 					$.ajax({url: "ajax.php",type: "POST", data: {pinNum: pinjs}, success: function(data){
+							console.log(data);
 							if(data.includes("set")){
 								$("form").append("<div class='alert alert-success' role='alert'>Success</div>");
 							}
