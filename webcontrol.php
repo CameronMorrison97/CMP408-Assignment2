@@ -15,10 +15,14 @@
 					var pinjs = $("#pin").val();
 					var valuejs = $("#value").val();
 					
-					$.ajax({url: "ajax.php",type: "POST", data: {pinNum: pinjs}, success: function(data){
+					$.ajax({url: "ajax.php",type: "POST", data: {pinNum: pinjs, valueNum: valuejs}, success: function(data){
 							console.log(data);
 							if(data.includes("set")){
 								$("form").append("<div class='alert alert-success' role='alert'>Success</div>");
+							}
+							
+							if(data.includes("Invalid")){
+								$("form").append("<div class='alert alert-danger' role='alert'>Both values need to be whole numbers.</div>");
 							}
 					}});
 				});
