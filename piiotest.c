@@ -86,16 +86,18 @@ int main(int argc, char *argv[]) {
 			write_to_driver(fd);
 		}
 
-		if (!strncmp(argv[1], "readpin", 8)) {
+		if (!strncmp(argv[1], "read", 5)) {
 			/*  Pass GPIO struct with IO control */
 			memset(&apin , 0, sizeof(apin));
 			strcpy(apin.desc, "Details");
 			apin.pin =  strtol (argv[2],NULL,10);
 			/* Pass 'apin' struct to 'fd' with IO control*/
 			printf("READ:Requested  pin:%i - val:%i - desc:%s\n" , apin.pin , apin.value, apin.desc);
+			ret = ioctl(fd, IOCTL_PIIO_GPIO_READ, &apin);
+			printf("%i\n",apin.value);
 		}
 
-		if (!strncmp(argv[1], "writepin", 9)) {
+		if (!strncmp(argv[1], "write", 6)) {
 			/*  Pass GPIO struct with IO control */
 			memset(&apin , 0, sizeof(apin));
 			strcpy(apin.desc, "Details");
@@ -105,6 +107,35 @@ int main(int argc, char *argv[]) {
 			/* Pass 'apin' struct to 'fd' with IO control*/
 			printf("WRITE:Requested pin:%i - val:%i - desc:%s\n" , apin.pin , apin.value, apin.desc);
 			ret = ioctl(fd, IOCTL_PIIO_GPIO_WRITE, &apin);
+		}
+
+		if(!strncmp(argv[1],"toggle",7)){
+			memset(&apin , 0, sizeof(apin));
+			strcpy(apin.desc, "Details");
+			apin.pin =  strtol(argv[2],NULL,10);
+			apin.value =  strtol(argv[3],NULL,10);
+			int i = strtol(argv[4],NULL,10);
+			int time = strtol(argv[5],NULL,10);
+
+			while(i > 0){
+				usleep(time);
+				i = i - 1;
+
+				switch(apin.value){
+					case 0:
+						/* Pass 'apin' struct to 'fd' with IO control*/
+						printf("Toggle:Requested pin:%i - val:%i - desc:%s\n" , apin.pin , apin.value, apin.desc);
+						ret = ioctl(fd, IOCTL_PIIO_GPIO_WRITE, &apin);
+						apin.value = 1;
+						break;
+					case 1:
+						/* Pass 'apin' struct to 'fd' with IO control*/
+						printf("Toggle:Requested pin:%i - val:%i - desc:%s\n" , apin.pin , apin.value, apin.desc);
+						ret = ioctl(fd, IOCTL_PIIO_GPIO_WRITE, &apin);
+						apin.value = 0;
+						break;
+				}
+			}
 		}
 
 
