@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
 	int fd, ret;
 	char *msg = "Message passed by ioctl\n";
 
-	fd = open("//dev//piiodev", O_RDWR);
+	fd = open("//dev//d1702366", O_RDWR);
 	if (fd < 0) {
 		printf("Can't open device file: %s\n", DEVICE_NAME);
 		exit(-1);
