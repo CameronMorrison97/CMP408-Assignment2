@@ -89,18 +89,17 @@ int main(int argc, char *argv[]) {
 		if (!strncmp(argv[1], "read", 5)) {
 			/*  Pass GPIO struct with IO control */
 			memset(&apin , 0, sizeof(apin));
-			strcpy(apin.desc, "Details");
+			strcpy(apin.desc, "LKMPin");
 			apin.pin =  strtol (argv[2],NULL,10);
 			/* Pass 'apin' struct to 'fd' with IO control*/
-			printf("READ:Requested  pin:%i - val:%i - desc:%s\n" , apin.pin , apin.value, apin.desc);
 			ret = ioctl(fd, IOCTL_PIIO_GPIO_READ, &apin);
-			printf("%i\n",apin.value);
+			printf("READ:Requested pin:%i - val:%i - desc:%s\n", apin.pin, apin.value, apin.desc);
 		}
 
 		if (!strncmp(argv[1], "write", 6)) {
 			/*  Pass GPIO struct with IO control */
 			memset(&apin , 0, sizeof(apin));
-			strcpy(apin.desc, "Details");
+			strcpy(apin.desc, "WriteOpt");
 			apin.pin =  strtol (argv[2],NULL,10);
 			apin.value =  strtol (argv[3],NULL,10);
 
@@ -111,7 +110,7 @@ int main(int argc, char *argv[]) {
 
 		if(!strncmp(argv[1],"toggle",7)){
 			memset(&apin , 0, sizeof(apin));
-			strcpy(apin.desc, "Details");
+			strcpy(apin.desc, "tgl");
 			apin.pin =  strtol(argv[2],NULL,10);
 			apin.value =  strtol(argv[3],NULL,10);
 			int i = strtol(argv[4],NULL,10);
