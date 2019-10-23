@@ -18,11 +18,13 @@
 					$.ajax({url: "ajax.php",type: "POST", data: {pinNum: pinjs, valueNum: valuejs}, success: function(data){
 							console.log(data);
 							if(data.includes("set")){
-								$("form").append("<div class='alert alert-success' role='alert'>Success</div>");
+								$("#Success").show();
+								$("#Danger").hide();
 							}
 							
 							if(data.includes("Invalid")){
-								$("form").append("<div class='alert alert-danger' role='alert'>Both values need to be whole numbers.</div>");
+								$("#Danger").show();
+								$("#Success").hide();
 							}
 					}});
 				});
@@ -38,6 +40,8 @@
 				GPIO Pin Value : <input id="value" type="text"></input></br>
 				<input type="button" value="Submit" onclick="sendData();" class="btn btn-primary"></input>
 			</form>
+			<div id="Success" class="alert alert-success" role='alert' style="display:none;">Success</div>
+			<div id="Danger" class="alert alert-danger" role='alert' style="display:none;">Both values need to be whole numbers.</div>
 		</div>
 	</body>
 </html>
