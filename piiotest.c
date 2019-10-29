@@ -117,6 +117,7 @@ int main(int argc, char *argv[]) {
 			int time = strtol(argv[5],NULL,10);
 
 			while(i > 0){
+				// usleep sleeps for microseconds please refer to reference 9.0
 				usleep(time);
 				i = i - 1;
 
